@@ -41,15 +41,21 @@ public class ParseMusic{
         return titles;
     }
 
-    public void writeFilesToFolder(List<String> links, List<String> titles) {
+    public void writeFilesToFolder(List<String> links, List<String> titles, String folderName) {
         int numTitle = 0;
+
+        File folder = new File(folderName);
+
+        if(!folder.exists()){
+            folder.mkdir();
+        }
 
         for(String link: links){
             try{
                 URLConnection conn = new URL("https:" + link).openConnection();
                 InputStream is = conn.getInputStream();
 
-                OutputStream outputStream = new FileOutputStream(new File("seregapirat/" + titles.get(numTitle) + ".mp3"));
+                OutputStream outputStream = new FileOutputStream(new File(folder.getPath() + "/" + titles.get(numTitle) + ".mp3"));
                 byte[] buffer = new byte[4096];
 
                 int len;

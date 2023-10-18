@@ -2,16 +2,24 @@ import bl.ParseMusic;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Domain {
-
     public static void main(String[] args) {
         ParseMusic parseMusic = new ParseMusic();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Пожалуйста вставьте ссылку на страницу: ");
+        String url = sc.nextLine();
+        System.out.print("\n" + "Пожалуйста укажите название папки: ");
+        String folderName = sc.nextLine();
+
+        sc.close();
 
         try{
-            List links = parseMusic.parseMusicURLs("https://audiohunter.ru/?song=%D0%A1%D0%95%D0%A0%D0%95%D0%93%D0%90+%D0%9F%D0%98%D0%A0%D0%90%D0%A2");
-            List titles = parseMusic.parseMusicTitles("https://audiohunter.ru/?song=%D0%A1%D0%95%D0%A0%D0%95%D0%93%D0%90+%D0%9F%D0%98%D0%A0%D0%90%D0%A2");
-            parseMusic.writeFilesToFolder(links, titles);
+            List links = parseMusic.parseMusicURLs(url);
+            List titles = parseMusic.parseMusicTitles(url);
+            parseMusic.writeFilesToFolder(links, titles, folderName);
         }catch (IOException e){
             e.printStackTrace();
         }
